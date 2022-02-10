@@ -16,4 +16,4 @@ router = express.Router();
 router.route('/').get(getHospitals).post(createHospital);
 router.route('/:id').get(getHospital).delete(deleteHospital).put(updateHospital);
 
-modul.exports = router
+module.exports = router

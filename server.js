@@ -1,29 +1,27 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const hospital = require('./routes/hospitals');
+const connectDB  = require('./config/db');
 
 dotenv.config({path:'./config/config.env'});
 
+//Connect to Database
+connectDB();
+
+
+
 const app = express();
 
-app.get('/api/v1/hospitals', (req,res) =>{
-    res.status(200).json({success:true,msg : 'Show all hospitals'});
-});
+//Body parse
+app.use(express.json());
 
-app.get('/api/v1/hospitals/:id', (req,res) =>{
-    res.status(200).json({success:true,msg : `Show hospitals ${req.params.id}` });
-});
-
-app.post('/api/v1/hospitals' , (req,res) =>{
-    res.status(200).json({success:true , msg :'Create new hospitals'});
-})
-
-app.put('/api/v1/hospitals/:id', (req,res) => {
-    res.status(200).json({success:true,msg:`Update hospital ${req.params.id}`});
-})
-
-app.delete('/api/v1/hospitals/:id', (req,res) =>{
-    res.status(200).json({success:true,msg : `Delete hospital ${req.params.id}`})
-});
+app.use('/api/v1/hospitals',hospital);
 
 const PORT = process.env.PORT;
-app.listen(PORT, console.log('Server running in ', process.env.NODE_ENV, ' mode one port ', PORT)); //server run แล้วนะ รอ connection
+const server = app.listen(PORT, console.log('Server running in ', process.env.NODE_ENV, ' mode one port ', PORT)); //server run แล้วนะ รอ connection
+
+process.on('unhandledRejection',(err,promise)=>{
+    console.log(`Error: ${err.message}`);
+
+    server.close(()=>process.exit(1));
+})

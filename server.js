@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const hospital = require("./routes/hospitals");
+const appointments = require("./routes/appointments")
 const connectDB = require("./config/db");
 const auth = require("./routes/auth");
 const cookieParser = require("cookie-parser");
@@ -20,6 +21,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/hospitals", hospital);
 app.use("/api/v1/auth", auth);
+app.use('/api/v1/appointments',appointments)
 
 const PORT = process.env.PORT;
 const server = app.listen(

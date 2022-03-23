@@ -5,6 +5,7 @@ const {
   createHospital,
   updateHospital,
   deleteHospital,
+  getVacCenters
 } = require("../controllers/hospitals");
 const { protect, authorize } = require("../middleware/auth");
 
@@ -28,10 +29,13 @@ router
   .route("/")
   .get(getHospitals)
   .post(protect, authorize("admin"), createHospital);
+router.route("/vacCenters").get(getVacCenters);
 router
   .route("/:id")
   .get(getHospital)
   .delete(protect, authorize("admin"), deleteHospital)
   .put(protect, authorize("admin"), updateHospital);
+
+
 
 module.exports = router;

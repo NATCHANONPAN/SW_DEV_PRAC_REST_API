@@ -16,7 +16,9 @@
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.1",
-    "run": "^1.4.0"
+    "mysql": "^2.18.1",
+    "run": "^1.4.0",
+    "sql": "^0.78.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

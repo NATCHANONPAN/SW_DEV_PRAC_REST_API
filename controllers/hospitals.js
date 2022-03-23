@@ -1,4 +1,6 @@
+const { restart } = require('nodemon');
 const Hospital = require('../models/Hospital');
+const vacCenter = require('../models/VacCenter');
 
 require('../models/Hospital');
 
@@ -140,4 +142,17 @@ exports.deleteHospital = async (req,res,next) => {
     }catch(err){
         res.status(400).json({success:false});
     }
+}
+
+exports.getVacCenters = (req,res,next) => {
+    vacCenter.getAll((err,data) => {
+        if(err){
+            res.status(500).send({
+                message: err.message || "Some error occured while retrieving Vaccine Centers"
+            })
+        }
+        else{
+            res.send(data)
+        }
+    })
 }

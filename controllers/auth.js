@@ -24,6 +24,7 @@ exports.register = async (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
+  try{
   const { email, password } = req.body;
 
   //validate email password
@@ -42,6 +43,7 @@ exports.login = async (req, res, next) => {
     });
   }
 
+
   //check if password matches
   const isMatch = await user.matchPassword(password);
 
@@ -54,7 +56,10 @@ exports.login = async (req, res, next) => {
   // const token = user.getSignedJwtToken();
 
   // res.status(200).json({ success: true, token });
-  sendTokenResponse(user, 200, res);
+  sendTokenResponse(user, 200, res);}
+  catch(err){
+    res.status(401).json({success:false,message:'Cannot convert email or password to string'})
+  }
 };
 
 //send status code , token,create cookie
@@ -82,3 +87,12 @@ exports.getMe = async (req, res, next) => {
   const user = await User.findById(req.user.id);
   res.status(200).json({ success: true, data: user });
 };
+
+exports.logout = async (req,res,next) => {
+  res.cookie('token','none',{
+    expires: new Date(Date.now()+ 10*1000),
+    httpOnly: true
+  })
+
+  res.status(200).json({success:true,data:{}})
+}

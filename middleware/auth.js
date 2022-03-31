@@ -12,10 +12,10 @@ exports.protect = async (req, res, next) => {
     token = req.headers.authorization.split(" ")[1];
   }
 
-  if (!token) {
+  if (!token || token == 'null') {
     return res.status(200).json({
       success: false,
-      message: "Not authorize to access this route",
+      message: "Not authorize to access this route no token",
     });
   }
 
@@ -31,7 +31,7 @@ exports.protect = async (req, res, next) => {
     console.log(err.stack);
     return res.status(401).json({
       success: false,
-      message: "Not authorize to access this route",
+      message: "Not authorize to access this route"
     });
   }
 };
